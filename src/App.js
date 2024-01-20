@@ -54,7 +54,8 @@ function App() {
       const resized = tf.image.resizeBilinear(img,[240,240])
       const casted = resized.cast('int32')
       const expanded = casted.expandDims(0)
-      // const obj = await net.executeAsync(expanded)
+      
+      
       const obj = await net.predict(expanded)
 
       const pred_arr = new Array(36).fill(0)
@@ -69,6 +70,11 @@ function App() {
       console.log('Max value is ', maxValue)
       const predLabel = pred_arr.indexOf(maxValue);
       console.log(predLabel)
+      console.log(obj)
+      
+
+      // const obj = await net.executeAsync(expanded)
+      // console.log(obj)
 
       // const boxes = await obj[1].array()
       // const classes = await obj[2].array()
