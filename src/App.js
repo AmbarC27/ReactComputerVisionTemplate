@@ -6,7 +6,7 @@ import * as tf from "@tensorflow/tfjs";
 import Webcam from "react-webcam";
 import "./App.css";
 // 2. TODO - Import drawing utility here
-// e.g. import { drawRect } from "./utilities";
+import { drawRect } from "./utilities";
 
 function App() {
   const webcamRef = useRef(null);
@@ -56,13 +56,31 @@ function App() {
       const expanded = casted.expandDims(0)
       // const obj = await net.executeAsync(expanded)
       const obj = await net.predict(expanded)
-      console.log(obj)
+
+      const pred_arr = new Array(36).fill(0)
+      console.log(obj.dataSync())
+
+      for (let i=0;i<36;i++){
+        pred_arr[i] = obj.dataSync()[i]
+      }
+      console.log(pred_arr)
+
+      const maxValue = Math.max(...pred_arr);
+      console.log('Max value is ', maxValue)
+      const predLabel = pred_arr.indexOf(maxValue);
+      console.log(predLabel)
+
+      // const boxes = await obj[1].array()
+      // const classes = await obj[2].array()
+      // const scores = await obj[4].array()
 
       // Draw mesh
       const ctx = canvasRef.current.getContext("2d");
 
       // 5. TODO - Update drawing utility
       // drawSomething(obj, ctx)  
+
+      // requestAnimationFrame(()=>{drawRect(boxes[0], classes[0], scores[0], 0.8, videoWidth, videoHeight, ctx)}); 
 
       tf.dispose(img)
       tf.dispose(resized)
