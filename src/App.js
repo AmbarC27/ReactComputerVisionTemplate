@@ -25,7 +25,7 @@ function App() {
     //  Loop and detect hands
     setInterval(() => {
       detect(net);
-    }, 16.7);
+    }, 2000);
   };
 
   const detect = async (net) => {
@@ -51,10 +51,11 @@ function App() {
       // 4. TODO - Make Detections
       // e.g. const obj = await net.detect(video);
       const img = tf.browser.fromPixels(video)
-      const resized = tf.image.resizeBilinear(img,[640,480])
+      const resized = tf.image.resizeBilinear(img,[240,240])
       const casted = resized.cast('int32')
       const expanded = casted.expandDims(0)
-      const obj = await net.executeAsync(expanded)
+      // const obj = await net.executeAsync(expanded)
+      const obj = await net.predict(expanded)
       console.log(obj)
 
       // Draw mesh
