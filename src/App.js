@@ -93,6 +93,7 @@ function App() {
       tf.dispose(casted)
       tf.dispose(expanded)
       tf.dispose(obj)
+      return predLabel
     }
   };
 
